@@ -16,7 +16,7 @@ It includes:
 A live demo is hosted at:
 
 ```
-<LIVE_DEMO_URL>
+https://pup-cea-cpe-portal.freedev.app/index.php
 ```
 
 The hosted demo runs the exact same code in this repository against a real

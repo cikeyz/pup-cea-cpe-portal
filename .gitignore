@@ -8,6 +8,9 @@ uploads/*
 # Local env config.
 .env
 
+# Deployment bundle (built locally, uploaded to shared hosting).
+deploy.zip
+
 # OS / editor noise.
 .DS_Store
 Thumbs.db

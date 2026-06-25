@@ -1,0 +1,997 @@
+/* =====================================================================
+   Activity-08 - Group 4 - Login and Registration stylesheet
+   ---------------------------------------------------------------------
+   Minimal PUP-CEA styling for a PHP/MySQL coursework portal. The design
+   keeps the campus photo secondary and makes the forms readable first.
+   ===================================================================== */
+
+/* ---------------------------
+   1. DESIGN TOKENS
+   --------------------------- */
+:root {
+  --pup-maroon: #880000;
+  --pup-maroon-dark: #4f0000;
+  --pup-gold: #b47a00;
+  --pup-gold-dark: #8a5d00;
+
+  --ink: #1f1b17;
+  --ink-soft: #5b5148;
+  --line: #ded5ca;
+  --line-strong: #b9aa9c;
+  --surface: #fffdf9;
+  --surface-muted: #f7f1ea;
+  --error: #9f2f24;
+  --success: #276d3a;
+  --focus: #1f5f9f;
+
+  --font-ui: Aptos, 'Segoe UI Variable', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-head: var(--font-ui);
+  --font-body: var(--font-ui);
+  --font-label: var(--font-ui);
+
+  --radius: 6px;
+  --max-card: 440px;
+}
+
+/* ---------------------------
+   2. BASE SETUP
+   --------------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  text-rendering: optimizeLegibility;
+}
+
+body.auth-bg,
+body.enroll-bg {
+  background-image:
+    linear-gradient(rgba(35, 18, 14, 0.66), rgba(35, 18, 14, 0.72)),
+    url('../assets/pup-cea.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+body.auth-bg {
+  display: grid;
+  place-items: center;
+  padding: 32px 18px;
+  overflow-x: hidden;
+}
+
+body.enroll-bg {
+  padding: 36px 16px 56px;
+}
+
+body.dashboard {
+  background: #f4efe8;
+  padding: 24px 16px 40px;
+}
+
+a {
+  color: var(--pup-maroon);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--pup-maroon-dark);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 20;
+  transform: translateY(-160%);
+  background: var(--surface);
+  border: 2px solid var(--focus);
+  border-radius: var(--radius);
+  color: var(--ink);
+  padding: 8px 12px;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ---------------------------
+   3. AUTH CARD
+   --------------------------- */
+.auth-card {
+  position: relative;
+  width: min(420px, calc(100dvw - 36px));
+  max-width: calc(100dvw - 36px);
+  background: rgba(255, 253, 249, 0.98);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36);
+  overflow: hidden;
+  padding: 38px 32px 28px;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--pup-maroon);
+}
+
+.brand-row,
+.logo-bar {
+  display: flex;
+  align-items: center;
+}
+
+.brand-row {
+  justify-content: center;
+  gap: 14px;
+  margin: 2px auto 12px;
+  width: 100%;
+  max-width: 180px;
+  min-width: 0;
+}
+
+.brand-row img,
+.enroll-header .logo-bar img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 34px;
+  background: var(--line);
+}
+
+.auth-card h1,
+.enroll-header h1,
+.dash-banner h1,
+.avatar-meta h2 {
+  font-family: var(--font-head);
+  font-weight: 650;
+  line-height: 1.15;
+}
+
+.auth-card h1 {
+  color: var(--pup-maroon);
+  font-size: clamp(1.25rem, 5dvw, 1.5rem);
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+
+.auth-subtitle {
+  color: var(--ink-soft);
+  font-size: clamp(0.86rem, 3.4dvw, 0.95rem);
+  text-align: center;
+  margin-bottom: 22px;
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------
+   4. FORM CONTROLS
+   --------------------------- */
+.field {
+  margin-bottom: 18px;
+}
+
+.field label,
+.field-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.req {
+  color: var(--error);
+  margin-left: 2px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+input[type="password"],
+input[type="file"],
+select,
+textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: #ffffff;
+  color: var(--ink);
+  font-size: 1rem;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(31, 95, 159, 0.18);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.pwd-wrap {
+  position: relative;
+}
+
+.pwd-wrap input {
+  padding-right: 74px;
+}
+
+.pwd-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  min-height: 32px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--pup-maroon);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 3px 8px;
+}
+
+.pwd-toggle:hover,
+.pwd-toggle:focus-visible {
+  border-color: var(--line-strong);
+  background: var(--surface-muted);
+  text-decoration: none;
+}
+
+.btn {
+  display: inline-block;
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 1px solid var(--pup-maroon);
+  border-radius: var(--radius);
+  background: var(--pup-maroon);
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.08s ease;
+}
+
+.btn:hover {
+  background: var(--pup-maroon-dark);
+  border-color: var(--pup-maroon-dark);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--pup-maroon);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-muted);
+  border-color: var(--pup-maroon-dark);
+  color: var(--pup-maroon-dark);
+}
+
+/* ---------------------------
+   5. MESSAGES AND LINKS
+   --------------------------- */
+.alert {
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  margin-bottom: 18px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.alert-error {
+  background: #fff0ee;
+  color: var(--error);
+  border: 1px solid #e0aaa3;
+}
+
+.alert-success {
+  background: #eef8f1;
+  color: var(--success);
+  border: 1px solid #9fc9aa;
+}
+
+.alert-info {
+  background: #fff8e8;
+  color: #6d4b00;
+  border: 1px solid #e0c176;
+}
+
+.success-screen {
+  padding: 22px;
+  border: 1px solid #9fc9aa;
+  border-radius: var(--radius);
+  background: #f2fbf5;
+}
+
+.success-kicker {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--success);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.success-screen h2 {
+  color: var(--pup-maroon);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.success-screen p {
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+
+.success-data {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.success-data div {
+  padding: 10px 12px;
+  border: 1px solid #c7dfce;
+  border-radius: var(--radius);
+  background: #ffffff;
+}
+
+.success-data dt {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.success-data dd {
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.success-actions {
+  display: flex;
+}
+
+.mode-switch {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 2px 0 14px;
+}
+
+.mode-switch a {
+  min-height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.mode-switch a:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-muted);
+  color: var(--ink);
+}
+
+.mode-switch a.active {
+  border-color: var(--pup-maroon);
+  background: #fff4f1;
+  color: var(--pup-maroon);
+}
+
+.auth-links {
+  margin-top: 18px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.9;
+  text-align: center;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.back-link::before {
+  content: '< ';
+}
+
+/* ---------------------------
+   6. ENROLLMENT FORM
+   --------------------------- */
+.enroll-shell {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 760px);
+  gap: 22px;
+  align-items: start;
+}
+
+.enroll-shell.success-mode {
+  width: min(760px, 100%);
+  grid-template-columns: 1fr;
+}
+
+.enroll-wrap {
+  min-width: 0;
+  background: rgba(255, 253, 249, 0.98);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+  padding: 30px;
+}
+
+.enroll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.enroll-header h1 {
+  color: var(--pup-maroon);
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  letter-spacing: -0.015em;
+}
+
+.enroll-header .eyebrow,
+.form-section legend,
+.menu-title,
+.strength-label,
+.char-counter,
+.error-msg,
+.detail-item label {
+  font-family: var(--font-label);
+}
+
+.enroll-header .eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.enroll-header .logo-bar {
+  gap: 12px;
+}
+
+.form-section {
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  padding: 24px 0 4px;
+  margin-bottom: 12px;
+  scroll-margin-top: 24px;
+}
+
+.form-section:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.form-section legend {
+  width: 100%;
+  color: var(--pup-maroon);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.radio-row label,
+.check-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: var(--pup-maroon);
+  cursor: pointer;
+}
+
+.helper,
+.file-name,
+.section-note,
+.photo-preview .placeholder {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.helper,
+.section-note {
+  margin-top: 5px;
+}
+
+.section-note {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-muted);
+}
+
+.file-name {
+  margin-top: 6px;
+}
+
+#pwd-strength {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+#pwd-strength .strength-bars {
+  display: flex;
+  gap: 4px;
+}
+
+#pwd-strength .bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--line);
+  transition: background-color 0.2s ease;
+}
+
+.strength-label {
+  align-self: flex-end;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+}
+
+.char-counter {
+  margin-top: 5px;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.char-counter.limit-reached {
+  color: var(--error);
+}
+
+.input-error {
+  border-color: var(--error) !important;
+}
+
+.error-msg {
+  display: block;
+  margin-top: 5px;
+  color: var(--error);
+  font-size: 0.82rem;
+}
+
+.photo-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-muted);
+  margin-bottom: 12px;
+}
+
+.photo-preview img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border: 3px solid var(--pup-maroon);
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.enroll-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.enroll-actions .btn {
+  width: auto;
+}
+
+/* ---------------------------
+   7. ENROLLMENT SECTION MENU
+   --------------------------- */
+#stepper {
+  position: sticky;
+  top: 24px;
+  background: rgba(255, 253, 249, 0.98);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
+  padding: 18px;
+}
+
+#stepper ol {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.menu-title {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+#stepper button {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 8px 10px;
+  text-align: left;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+#stepper button:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-muted);
+  color: var(--ink);
+}
+
+#stepper button.active {
+  border-color: var(--pup-maroon);
+  background: #fff4f1;
+  color: var(--pup-maroon);
+}
+
+.step-no {
+  min-width: 30px;
+  font-family: var(--font-label);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* ---------------------------
+   8. DASHBOARD
+   --------------------------- */
+.dash {
+  width: min(900px, 100%);
+  margin: 0 auto;
+  background: rgba(255, 253, 249, 0.98);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.dash-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  color: var(--pup-maroon);
+  padding: 18px 24px;
+}
+
+.dash-banner img.logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.dash-banner h1 {
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+.dash-body {
+  padding: 24px;
+}
+
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.avatar-photo,
+.avatar-initials {
+  width: 68px;
+  height: 68px;
+  border: 2px solid var(--pup-maroon);
+  border-radius: 50%;
+}
+
+.avatar-photo {
+  object-fit: cover;
+}
+
+.avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-muted);
+  color: var(--pup-maroon);
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 650;
+}
+
+.avatar-meta h2 {
+  color: var(--pup-maroon);
+  font-size: 1.2rem;
+}
+
+.badge {
+  display: block;
+  margin-top: 6px;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.badge-student {
+  color: var(--ink-soft);
+}
+
+.badge-guest {
+  color: var(--ink-soft);
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+}
+
+.detail-item label {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+  text-transform: uppercase;
+}
+
+.detail-item span {
+  color: var(--ink);
+  font-size: 0.96rem;
+  word-break: break-word;
+}
+
+.detail-full {
+  grid-column: 1 / -1;
+}
+
+.dash-actions {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.dash-actions .btn {
+  width: auto;
+  min-width: 140px;
+}
+
+/* ---------------------------
+   9. RESPONSIVE
+   --------------------------- */
+@media (max-width: 920px) {
+  .enroll-shell {
+    grid-template-columns: 1fr;
+  }
+
+  #stepper {
+    top: 12px;
+    z-index: 10;
+    padding: 12px;
+  }
+
+  #stepper ol {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  #stepper button {
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 6px;
+    text-align: center;
+  }
+
+  .menu-title {
+    display: none;
+  }
+
+  .step-no {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 639px) {
+  body.auth-bg,
+  body.enroll-bg,
+  body.dashboard {
+    background-attachment: scroll;
+    padding: 18px 12px 36px;
+  }
+
+  .auth-card,
+  .enroll-wrap {
+    padding: 24px 18px;
+  }
+
+  .auth-card {
+    padding-top: 30px;
+  }
+
+  .brand-row {
+    gap: 10px;
+  }
+
+  .brand-row img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .grid-2col,
+  .detail-grid,
+  .check-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .enroll-header {
+    flex-direction: column-reverse;
+    gap: 16px;
+  }
+
+  #stepper {
+    position: static;
+  }
+
+  #stepper ol {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #stepper button {
+    justify-content: flex-start;
+  }
+
+  .radio-row label {
+    width: 100%;
+  }
+
+  .enroll-actions {
+    flex-direction: column-reverse;
+  }
+
+  .enroll-actions .btn,
+  .dash-actions .btn,
+  .success-actions .btn {
+    width: 100%;
+  }
+
+  .avatar-row {
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">PUP CEA-CpE Portal</title>
+  <rect width="64" height="64" rx="14" fill="#880000"/>
+  <path d="M14 15h36v34H14z" fill="#fffdf9"/>
+  <path d="M19 20h26v5H19zm0 10h20v5H19zm0 10h26v5H19z" fill="#880000"/>
+  <circle cx="47" cy="47" r="11" fill="#b47a00" stroke="#fffdf9" stroke-width="4"/>
+  <text x="47" y="51" text-anchor="middle" font-family="Aptos, Segoe UI, Arial, sans-serif" font-size="9" font-weight="700" fill="#1f1b17">CpE</text>
+</svg>

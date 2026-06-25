@@ -1,0 +1,14 @@
+# pup-cea-cpe-portal
+
+# Uploaded user files (profile photos, school documents). Keep the
+# folder itself via .gitkeep so the app can write into it on first run.
+uploads/*
+!uploads/.gitkeep
+
+# Local env config.
+.env
+
+# OS / editor noise.
+.DS_Store
+Thumbs.db
+*.log

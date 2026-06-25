@@ -23,7 +23,7 @@ The hosted demo runs the exact same code in this repository against a real
 MySQL database, so anyone can try the portal without installing anything. See
 "Hosted deployment" below for how that instance is set up.
 
-## Run it locally with XAMPP (recommended for grading)
+## Run it locally with XAMPP
 
 This is a vanilla PHP/MySQL project, so it runs on a standard XAMPP stack with
 no build step and no dependencies.
@@ -76,26 +76,27 @@ different values, copy `.env.example` to `.env` and adjust them (see
 ## Project layout
 
 ```text
-pup-cea-cpe-portal/
-  assets/
-    cpe-logo.png
-    favicon.svg
-    pup-cea.jpg
-    pup-logo.png
-  css/style.css
-  db_connect.php
-  database.sql          # full schema: creates DB + tables (for local XAMPP)
-  database-hosted.sql   # tables only (for shared hosting without CREATE DB)
-  enroll.php
-  forgot-password.php
-  home.php
-  index.php
-  js/
-    auth.js
-    enroll.js
-  logout.php
-  register-guest.php
-  uploads/
+.
+└── pup-cea-cpe-portal/
+    ├── assets/
+    │   ├── cpe-logo.png
+    │   ├── favicon.svg
+    │   ├── pup-cea.jpg
+    │   └── pup-logo.png
+    ├── css/style.css
+    ├── db_connect.php
+    ├── database.sql          # full schema: creates DB + tables (for local XAMPP)
+    ├── database-hosted.sql   # tables only (for shared hosting without CREATE DB)
+    ├── enroll.php
+    ├── forgot-password.php
+    ├── home.php
+    ├── index.php
+    ├── js/
+    │   ├── auth.js
+    │   └── enroll.js
+    ├── logout.php
+    ├── register-guest.php
+    └── uploads/
 ```
 
 ## Features

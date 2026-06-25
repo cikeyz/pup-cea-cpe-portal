@@ -14,12 +14,12 @@ It includes:
 A live demo is available at:
 
 ```
-<LIVE_DEMO_URL>
+https://pup-cea-cpe-portal.loca.lt/index.php
 ```
 
-The demo runs the same PHP/MySQL code in this repository. If the link is an
-ephemeral tunnel, it stays up only while the host server is running; see the
-notes at the bottom of this file.
+The demo runs the same PHP/MySQL code in this repository. The link above is an
+ephemeral tunnel, so it stays up only while the host server and the tunnel
+process are both running; see the notes at the bottom of this file.
 
 ## Requirements
 
